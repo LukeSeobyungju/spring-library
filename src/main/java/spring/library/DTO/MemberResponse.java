@@ -1,7 +1,10 @@
 package spring.library.DTO;
 
-import lombok.Builder;
+import lombok.*;
+import spring.library.Domain.Member;
 
+@Getter
+@Setter
 @Builder
 public class MemberResponse {
     private long memberId;
