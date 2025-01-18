@@ -38,10 +38,10 @@ public class Member {
                 .build();
     }
     public void update(MemberRequest memberRequest){
-        this.name=memberRequest.getName();
-        this.stuNumber=memberRequest.getStuNumber();
-        this.feature=memberRequest.getFeature();
-        this.email=memberRequest.getEmail();
-        this.phoneNumber=memberRequest.getPhoneNumber();
+        setName(memberRequest.getName());
+        setStuNumber(memberRequest.getStuNumber());
+        setFeature(memberRequest.getFeature());
+        setEmail(memberRequest.getEmail());
+        setPhoneNumber(memberRequest.getPhoneNumber());
     }
 }
