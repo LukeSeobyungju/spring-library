@@ -36,9 +36,16 @@ public class Loan {
     private Book book;
 
     public static Loan loan(Member member, Book book) {
+
+        int plus = switch (member.getFeature()) {
+            case "학생" -> 10;
+            case "교직원" -> 30;
+            default -> 110813;
+        };
+
         return Loan.builder()
                 .loanDate(LocalDate.now().toString())
-                .dueDate(LocalDate.now().plusDays(10).toString())
+                .dueDate(LocalDate.now().plusDays(plus).toString())
                 .renewalCount(0)
                 .returned(false)
                 .member(member)

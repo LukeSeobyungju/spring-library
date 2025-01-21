@@ -34,6 +34,19 @@ public class LoanService {
         if (book == null) return "오류";
         if(book.getStatus().equals("대출가능")){
             Member member = memberRepository.findById(loanRequest.getMemberId()).orElse(null);
+            if(member == null) return "오류";
+            int count=member.getBooks().stream().filter(loan-> loan.isReturned()==false).toList().size();
+            switch(member.getFeature()){
+                case "학생":
+                    if(count==10) return "오류";
+                    break;
+                case "교직원":
+                    if(count==20) return "오류";
+                    break;
+                default:
+                    if(count==100) return "오류";
+                    break;
+            }
             loanRepository.save(Loan.loan(member, book));
             book.statusChange();
             return "대출 완료";
