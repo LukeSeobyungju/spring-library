@@ -23,8 +23,7 @@ public class LoanController {
 
     @PostMapping("/books/{bookId}/checkout")
     public ResponseEntity<String> checkoutBook(@PathVariable long bookId, @RequestBody LoanRequest loanRequest) {
-        String response = loanService.checkoutBook(bookId,loanRequest);
-        return ResponseEntity.ok().body(response);
+        return ResponseEntity.ok().body(loanService.checkoutBook(bookId,loanRequest));
     }
 
 
@@ -44,15 +43,15 @@ public class LoanController {
 
 
     @PutMapping("books/{bookId}/return")
-    public String returnBook(@PathVariable long bookId, @RequestBody LoanRequest loanRequest) {
-        return loanService.returnBook(bookId,loanRequest);
+    public ResponseEntity<String> returnBook(@PathVariable long bookId, @RequestBody LoanRequest loanRequest) {
+        return ResponseEntity.ok().body(loanService.returnBook(bookId,loanRequest));
     }
 
 
 
     @PutMapping("books/{bookId}/renewal")
-    public String checkoutRenewal(@PathVariable long bookId, @RequestBody LoanRequest loanRequest) {
-        return loanService.checkoutRenewal(bookId,loanRequest);
+    public ResponseEntity<String> checkoutRenewal(@PathVariable long bookId, @RequestBody LoanRequest loanRequest) {
+        return ResponseEntity.ok().body(loanService.checkoutRenewal(bookId,loanRequest));
     }
 
 

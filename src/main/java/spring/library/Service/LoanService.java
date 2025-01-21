@@ -22,13 +22,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoanService {
 
+
     private final LoanRepository loanRepository;
     private final BookRepository bookRepository;
     private final MemberRepository memberRepository;
 
+
     @Transactional
     public String checkoutBook(long bookId, LoanRequest loanRequest) {
         Book book = bookRepository.findById(bookId).orElse(null);
+        if (book == null) return "오류";
         if(book.getStatus().equals("대출가능")){
             Member member = memberRepository.findById(loanRequest.getMemberId()).orElse(null);
             loanRepository.save(Loan.loan(member, book));
@@ -36,13 +39,14 @@ public class LoanService {
             return "대출 완료";
         }
         else return "오류";
-
     }
+
 
     public List<LoanDto> checkoutList(long memberId) {
         Member member = memberRepository.findById(memberId).orElse(null);
         return member.getBooks().stream().filter(loan-> loan.isReturned()==false).map(LoanDto::from).toList();
     }
+
 
     public List<LoanDtoHistory> checkoutHistory(long memberId) {
         Member member = memberRepository.findById(memberId).orElse(null);
@@ -62,6 +66,7 @@ public class LoanService {
         }
         else return "오류";
     }
+
 
     @Transactional
     public String checkoutRenewal(long bookId, LoanRequest loanRequest) {

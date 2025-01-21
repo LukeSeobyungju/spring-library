@@ -15,24 +15,40 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class BookService {
+
+
     private final BookRepository bookRepository;
 
-    public BookResponse addBook(BookRequest bookRequest) {
-        return BookResponse.from(BookDto.from(bookRepository.save(Book.from(bookRequest))));
+
+    public String addBook(BookRequest bookRequest) {
+        bookRepository.save(Book.from(bookRequest));
+        return "추가 완료";
     }
+
 
     public List<BookResponse> getAllBooks() {
         return bookRepository.findAll().stream().map(BookDto::from).toList().stream().map(BookResponse::from).toList();
     }
 
+
     @Transactional
-    public BookResponse updateBook(Long bookId, BookRequest bookRequest) {
+    public String updateBook(Long bookId, BookRequest bookRequest) {
         Book book=bookRepository.findById(bookId).orElse(null);
-        book.update(bookRequest);
-        return BookResponse.from(BookDto.from(book));
+        if(book!=null){
+            book.update(bookRequest);
+            return "수정 완료";
+        }
+        else return "오류";
     }
 
-    public void deleteBook(Long bookId) {
-        bookRepository.deleteById(bookId);
+
+    public String deleteBook(Long bookId) {
+        if(bookRepository.existsById(bookId)) {
+            bookRepository.deleteById(bookId);
+            return "삭제 완료";
+        }
+        else return "오류";
     }
+
+
 }
