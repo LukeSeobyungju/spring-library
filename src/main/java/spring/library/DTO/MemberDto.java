@@ -9,7 +9,7 @@ import spring.library.Domain.Member;
 @NoArgsConstructor
 @Builder
 public class MemberDto {
-    private long memberId;
+    private long id;
     private String name;
     private long stuNumber;
     private String feature;
@@ -18,7 +18,7 @@ public class MemberDto {
 
     public static MemberDto from(Member member) {
         return MemberDto.builder()
-                .memberId(member.getMemberId())
+                .id(member.getId())
                 .name(member.getName())
                 .stuNumber(member.getStuNumber())
                 .feature(member.getFeature())

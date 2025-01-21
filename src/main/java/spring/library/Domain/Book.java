@@ -1,11 +1,11 @@
 package spring.library.Domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import spring.library.DTO.BookRequest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -26,6 +26,24 @@ public class Book {
     private String classification;
     private String status;
     private long amount;
+
+
+
+    @OneToMany(
+        mappedBy="book",
+        fetch=FetchType.LAZY,
+        cascade=CascadeType.ALL,
+        orphanRemoval=true)
+    private List<Loan> list=new ArrayList<>();
+
+
+    public void statusChange(){
+        if(status.equals("대출가능")){
+            status="대출중";
+        }
+        else status="대출가능";
+    }
+
 
 
     public static Book from(BookRequest bookRequest){
@@ -49,5 +67,7 @@ public class Book {
         setStatus(bookRequest.getStatus());
         setAmount(bookRequest.getAmount());
     }
+
+
 
 }

@@ -18,6 +18,7 @@ public class BookDto {
     private String status;
     private long amount;
 
+
     public static BookDto from(Book book) {
         return BookDto.builder()
                 .id(book.getId())

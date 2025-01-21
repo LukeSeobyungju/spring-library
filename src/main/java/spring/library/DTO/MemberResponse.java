@@ -1,13 +1,12 @@
 package spring.library.DTO;
 
 import lombok.*;
-import spring.library.Domain.Member;
 
 @Getter
 @Setter
 @Builder
 public class MemberResponse {
-    private long memberId;
+    private long id;
     private String name;
     private long stuNumber;
     private String feature;
@@ -16,7 +15,7 @@ public class MemberResponse {
 
     public static MemberResponse from(MemberDto memberDto) {
         return MemberResponse.builder()
-                .memberId(memberDto.getMemberId())
+                .id(memberDto.getId())
                 .name(memberDto.getName())
                 .stuNumber(memberDto.getStuNumber())
                 .feature(memberDto.getFeature())

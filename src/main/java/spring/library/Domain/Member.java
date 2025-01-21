@@ -1,13 +1,13 @@
 package spring.library.Domain;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import spring.library.DTO.MemberDto;
 import spring.library.DTO.MemberRequest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,13 +19,20 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int memberId;
+    private long id;
 
     private String name;
     private long stuNumber;
     private String feature;
     private String email;
     private String phoneNumber;
+
+    @OneToMany(
+        mappedBy="member",
+        fetch=FetchType.LAZY,
+        cascade=CascadeType.ALL,
+        orphanRemoval=true)
+    private List<Loan> books=new ArrayList<>();
 
 
     public static Member from(MemberRequest memberRequest){
